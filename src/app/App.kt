@@ -6,21 +6,27 @@ import org.w3c.dom.events.Event
 import react.*
 import react.dom.*
 
-class App : RComponent<RProps, RState>() {
-    var count = 0
+interface AppState: RState {
+    var count: Int
+}
+
+class App : RComponent<RProps, AppState>() {
+    init {
+        state.count = 0
+    }
 
     fun increment (evt: Event) {
-        count++
-        console.log("count: $count")
+        setState { count = state.count + 1 }
+        console.log("count: ${state.count}")
     }
 
     fun decrement (evt: Event) {
-        count--
-        console.log("count: $count")
+        setState { count = state.count - 1 }
+        console.log("count: ${state.count}")
     }
 
     override fun RBuilder.render() {
-        +"${count}"
+        +"${state.count}"
         button () {
             attrs.onClickFunction = ::increment
             +"Add"
