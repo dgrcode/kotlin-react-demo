@@ -1,39 +1,21 @@
 package app
 
-import kotlin.js.*
-import kotlinx.html.js.onClickFunction
-import org.w3c.dom.events.Event
+import counter.*
 import react.*
-import react.dom.*
+import react.dom.div
+import react.dom.p
 
-interface AppState: RState {
-    var count: Int
-}
 
-class App : RComponent<RProps, AppState>() {
-    init {
-        state.count = 0
-    }
-
-    fun increment (evt: Event) {
-        setState { count = state.count + 1 }
-        console.log("count: ${state.count}")
-    }
-
-    fun decrement (evt: Event) {
-        setState { count = state.count - 1 }
-        console.log("count: ${state.count}")
-    }
-
+class App : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
-        +"${state.count}"
-        button () {
-            attrs.onClickFunction = ::increment
-            +"Add"
+        div {
+            p{+"counter 1"}
+            counter()
         }
-        button () {
-            attrs.onClickFunction = ::decrement
-            +"Remove"
+
+        div {
+            p {+"counter 2"}
+            counter()
         }
     }
 }
